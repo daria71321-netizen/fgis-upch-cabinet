@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { font-size: 15px; }
+  body {
+    @apply bg-bg text-ink font-sans antialiased;
+    font-variant-numeric: tabular-nums;
+    background-image:
+      radial-gradient(1200px 520px at 85% -10%, rgba(59, 58, 64, .07), transparent 60%),
+      radial-gradient(900px 480px at -10% 30%, rgba(90, 90, 100, .05), transparent 60%);
+    background-attachment: fixed;
+  }
+  h1, h2, h3 { text-wrap: balance; }
+  :focus-visible { outline: 2px solid #3B3A40; outline-offset: 2px; }
+  button { cursor: pointer; }
+}
+
+@layer components {
+  .card { @apply bg-surface rounded-lg shadow-card border border-white/60; }
+  .card-pad { @apply p-5 sm:p-6; }
+  .h-section { @apply text-[17px] font-bold tracking-[-0.01em] text-ink; }
+  .page-title { @apply font-display text-[24px] sm:text-[30px] leading-[1.1] font-medium tracking-[-0.02em]; }
+  .kpi-num { @apply font-display font-medium tracking-[-0.03em] leading-none text-ink; }
+  .eyebrow { @apply text-xs font-semibold uppercase tracking-[0.12em] text-muted; }
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed; }
+  .btn-primary { @apply btn bg-accent text-white hover:bg-accent-hover hover:shadow-[0_8px_20px_-8px_rgba(30,30,40,.6)]; }
+  .btn-secondary { @apply btn bg-surface border border-line2 text-ink hover:border-ink; }
+  .btn-ghost { @apply btn text-ink hover:bg-bg; }
+  .select { @apply max-w-full min-w-0 rounded-full border border-line2 bg-surface pl-4 pr-8 py-2 text-sm text-ink hover:border-muted; }
+  .input { @apply w-full rounded-[14px] border border-line2 bg-surface px-3.5 py-2 text-sm text-ink hover:border-muted focus:border-accent focus:outline-none; }
+  .chip { @apply inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors; }
+  .badge { @apply whitespace-nowrap inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold; }
+  .label { @apply text-xs font-medium text-muted; }
+  .link { @apply text-ink font-semibold underline decoration-line2 underline-offset-4 hover:decoration-ink; }
+  .glass { @apply bg-white/75 backdrop-blur-xl border border-white/70; }
+  .tbl { @apply w-full text-sm; }
+  .tbl th { @apply text-left font-semibold text-muted text-xs px-3 py-2.5 border-b border-line whitespace-nowrap; }
+  .tbl td { @apply px-3 py-2.5 border-b border-line align-top; }
+}
+
+@keyframes rise { from { opacity: .001; transform: translateY(10px) } to { opacity: 1; transform: none } }
+.page-enter { animation: rise .5s cubic-bezier(.2,.7,.2,1) both; }
+@keyframes morph {
+  0%, 100% { border-radius: 42% 58% 63% 37% / 41% 44% 56% 59%; transform: rotate(0deg) scale(1) }
+  33% { border-radius: 63% 37% 41% 59% / 56% 62% 38% 44%; transform: rotate(40deg) scale(1.06) }
+  66% { border-radius: 37% 63% 52% 48% / 38% 46% 54% 62%; transform: rotate(-25deg) scale(.96) }
+}
+.blob { animation: morph 16s ease-in-out infinite; }
+@keyframes spin { to { transform: rotate(360deg) } }
+.spin { animation: spin 1s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .blob, .page-enter { animation: none } }
+
+.select {
+  -webkit-appearance: none; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235E5C63' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center;
+}
+
+/* Печать: только бланк ответа */
+.print-only { display: none; }
+@media print {
+  @page { size: A4; margin: 18mm 16mm 18mm 22mm; }
+  body { background: #fff !important; }
+  .no-print { display: none !important; }
+  .print-only { display: block !important; }
+}
